@@ -21,13 +21,13 @@ state-changing action on the device.
 
 Linux with BlueZ stack.
 
-BLESuite -> https://github.com/nccgroup/BLESuite
+BLESuite -> https://github.com/cryogenics1/BLESuite
 
 
 ## Usage
 
 ```bash
-python ble-replay.py -h
+python3 ble-replay.py -h
 ```
 
 ## Replay File Format
@@ -48,20 +48,20 @@ Each line contains a JSON list of 4 parameters:
 
 Fetch the HCI log from Android device and replay it as is:
 ```bash
-python ble-replay.py -f -r
+python3 ble-replay.py -f -r
 ```
 
 Parse an HCI log from your computer and replay it as is:
 ```bash
-python ble-replay.py -p btsnoop_hci.log -r
+python3 ble-replay.py -p btsnoop_hci.log -r
 ```
 
 
 Fetch the HCI log from Android device and write modifiaBLE replay data to disk:
 ```bash
-python ble-replay.py -f -of replaydata.json
+python3 ble-replay.py -f -of replaydata.json
 ```
 Modify the hex values as needed and then play that file using:
 ```bash
-python ble-replay.py -if replaydata.json -r
+python3 ble-replay.py -if replaydata.json -r
 ```
