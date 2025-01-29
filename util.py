@@ -1,8 +1,8 @@
 import json
 import binascii
 import random
-from bleSuite.bleConnectionManager import BLEConnectionManager
-from bleSuite.bleServiceManager import bleServiceWriteToHandle
+from blesuite.connection_manager import BLEConnectionManager
+from blesuite.cli.blesuite_wrapper import ble_service_write as bleServiceWriteToHandle
 
 
 def replay_file_write(rows, filename):
@@ -29,21 +29,21 @@ def gatt_write(conn, handle, message, fuzz_positions, num_iterations):
     if fuzz_positions:
         for position in fuzz_positions:
             if position*2 >= len(current_message):
-                print "Fuzz position beyond length of message"
+                print("Fuzz position beyond length of message")
                 return
             current_message = current_message[0:position*2] + \
                 binascii.hexlify(chr(random.randint(0, 255))) + \
                 current_message[position*2:]
     for _ in range(num_iterations):
-        print "writing {} ({}) to handle {}".format(current_message,
+        print("writing {} ({}) to handle {}".format(current_message,
                                               repr(current_message.decode('hex')),
-                                              handle)
+                                              handle))
         if not conn.isConnected:
-            print "Connection lost, reconnecting"
+            print("Connection lost, reconnecting")
             conn.connect()
         try:
             bleServiceWriteToHandle(conn, int(handle, 16),
                                     current_message.decode('hex'))
         except Exception as e:
-            print e
+            print(e)
             conn.connect()
